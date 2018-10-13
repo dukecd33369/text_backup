@@ -3,7 +3,7 @@ vi /etc/nginx/sites-enabled/default
 # 主server块内,现有规范之后添加一个新的location块以将代理websocket流量代理到V2Ray
 location /v2ray/ {
     proxy_redirect off;
-    proxy_pass http://localhost:36977; #端口为V2Ray端口
+    proxy_pass http://localhost:port;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
