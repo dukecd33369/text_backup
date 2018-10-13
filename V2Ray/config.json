@@ -1,3 +1,4 @@
+//动态端口
 {
   "log" : {
     "access": "/var/log/v2ray/access.log",
@@ -58,6 +59,56 @@
           "ip": [
             "geoip:private"
           ],
+          "outboundTag": "blocked"
+        }
+      ]
+    }
+  }
+}
+//配合Nginx使用
+{
+  "log" : {
+    "access": "/var/log/v2ray/access.log",
+    "error": "/var/log/v2ray/error.log",
+    "loglevel": "warning"
+  },
+  "inbound": {
+    "port": port,
+    "protocol": "vmess",
+    "settings": {
+      "clients": [
+        {
+          "id": "UUID",
+          "level": 1,
+          "alterId": 64
+        }
+      ]
+    },
+    "streamSettings": {
+      "network": "ws",
+      "wsSettings": {
+        "path": "/v2ray/"
+      }
+    }
+  },
+  "outbound": {
+    "protocol": "freedom",
+    "settings": {}
+  },
+  "outboundDetour": [
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "rules": [
+        {
+          "type": "field",
+          "ip": ["geoip:private"],
           "outboundTag": "blocked"
         }
       ]
